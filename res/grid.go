@@ -1,9 +1,5 @@
 package res
 
-import (
-	//"log"
-)
-
 type Grid struct {
 	BoundingBox Coordinate
 
@@ -42,16 +38,14 @@ func (g Grid) Point(r Resolution) Coordinate {
 	// If we are on the last row, we may have less cols
 	cols := g.Columns
 	if row == (g.Total / g.Columns) {
-		cols = (g.Total % g.Columns) + 1
+		cols = g.Total % g.Columns
 	}
 
 	totalWidth := TotalRowWidth(cols, g.Width, g.Gutter)
 	offsetLeft := RowOffset(col, g.Width, g.Gutter)
 
 	x := (g.BoxWidth()-totalWidth)/2 + offsetLeft
-	y := (g.Index / g.Columns) * (g.Height + g.Padding)
-
-	//log.Println(g.BoxWidth(), totalWidth)
+	y := row * (g.Height + g.Padding)
 
 	c := Coordinate{x, y}
 	c = g.BoundingBox.Shift(c)

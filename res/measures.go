@@ -18,13 +18,22 @@ const (
 	WindowBottom = 974
 	WindowLeft   = 410
 
-	AbilityBoundingLeft  = 602
-	AbilityBoundingTop   = 185
+	AbilityBoundingLeft = 602
+	AbilityBoundingTop  = 185
 
 	AbilityWidth   = 75
 	AbilityHeight  = 74
 	AbilityGutter  = 86
 	AbilityColumns = 6
+
+	PassiveBoundingLeft = 483
+	PassiveBoundingTop  = 315
+
+	PassiveWidth   = 87
+	PassiveHeight  = 83
+	PassiveGutter  = 154
+	PassivePadding = 32
+	PassiveColumns = 4
 
 	SlotWidth = iota
 	SlotHeight

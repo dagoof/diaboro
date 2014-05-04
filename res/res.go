@@ -27,7 +27,7 @@ type Pointer interface {
 }
 
 type Passive struct {
-	Row, Offset int
+	Total, Offset int
 }
 
 type Ability struct {
@@ -39,7 +39,19 @@ type Rune struct {
 }
 
 func (p Passive) Point(r Resolution) Coordinate {
-	return Coordinate{}
+	return Grid{
+		Coordinate{
+			PassiveBoundingLeft,
+			PassiveBoundingTop,
+		},
+		PassiveWidth,
+		PassiveHeight,
+		PassiveGutter,
+		PassivePadding,
+		PassiveColumns,
+		p.Total,
+		p.Offset,
+	}.Point(r)
 }
 
 /*
