@@ -55,17 +55,10 @@ func (p Passive) Point(r Resolution) Coordinate {
 }
 
 /*
-
 	  [0] [1]
     [0] [1] [2]
   [0] [1] [2] [3]
 [0] [1] [2] [3] [4]
-
-total width = total * width + (total - 1) * gutter
-left offset = index * width + (index - 1) * gutter
-
-top-left = (total-width / 2)
-
 */
 func (a Ability) Point(r Resolution) Coordinate {
 	return Grid{
@@ -80,6 +73,22 @@ func (a Ability) Point(r Resolution) Coordinate {
 		AbilityColumns,
 		a.Total,
 		a.Offset,
+	}.Point(r)
+}
+
+func (roune Rune) Point(r Resolution) Coordinate {
+	return Grid{
+		Coordinate{
+			RuneBoundingLeft,
+			RuneBoundingTop,
+		},
+		RuneWidth,
+		RuneHeight,
+		RuneGutter,
+		0,
+		RuneColumns,
+		RuneColumns,
+		roune.Offset,
 	}.Point(r)
 }
 

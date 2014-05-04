@@ -20,20 +20,25 @@ const (
 
 	AbilityBoundingLeft = 602
 	AbilityBoundingTop  = 185
-
-	AbilityWidth   = 75
-	AbilityHeight  = 74
-	AbilityGutter  = 86
-	AbilityColumns = 6
+	AbilityWidth        = 75
+	AbilityHeight       = 74
+	AbilityGutter       = 86
+	AbilityColumns      = 6
 
 	PassiveBoundingLeft = 483
 	PassiveBoundingTop  = 315
+	PassiveWidth        = 87
+	PassiveHeight       = 83
+	PassiveGutter       = 154
+	PassivePadding      = 32
+	PassiveColumns      = 4
 
-	PassiveWidth   = 87
-	PassiveHeight  = 83
-	PassiveGutter  = 154
-	PassivePadding = 32
-	PassiveColumns = 4
+	RuneBoundingLeft = 521
+	RuneBoundingTop  = 442
+	RuneWidth        = 78
+	RuneHeight       = 77
+	RuneGutter       = 82
+	RuneColumns      = 6
 
 	SlotWidth = iota
 	SlotHeight
@@ -52,12 +57,6 @@ const (
 	ButtonWidth
 	ButtonHeight
 	ButtonGutter
-
-	RuneWidth
-	RuneHeight
-	RuneLeftOffset
-	RuneTopOffset
-	RuneGutter
 )
 
 type Coordinate struct {

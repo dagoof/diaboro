@@ -22,8 +22,16 @@ func TestAbility(t *testing.T) {
 func TestPassive(t *testing.T) {
 	r := Resolution{1920, 1200}
 
-	total := 19
+	total := 18
 	for i := 0; i < total; i++ {
 		t.Error(total, Passive{total, i}.Point(r))
+	}
+}
+
+func TestRune(t *testing.T) {
+	r := Resolution{1920, 1200}
+
+	for i := 0; i < RuneColumns; i++ {
+		t.Error(Rune{i}.Point(r))
 	}
 }
