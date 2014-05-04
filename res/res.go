@@ -14,24 +14,12 @@ const (
 	Cancel
 )
 
-type Coordinate struct {
-	X, Y int
-}
-
 type Resolution struct {
 	Width, Height int
 }
 
-func (r Resolution) Scale() Offset {
-	return Offset(r.Height) * 0.8
-}
-
-func (r Resolution) X(n Offset) int {
-	return (r.Width - r.Height) + int(r.Scale() * n)
-}
-
-func (r Resolution) Y(n Offset) int {
-	return int(r.Scale() * n)
+func (r Resolution) Normalize(c Coordinate) Coordinate {
+	return c
 }
 
 type Pointer interface {
@@ -69,16 +57,15 @@ top-left = (total-width / 2)
 */
 func (a Ability) Point(r Resolution) Coordinate {
 	return Grid{
-		BoundingBox{
+		Coordinate{
 			AbilityBoundingLeft,
 			AbilityBoundingTop,
-			AbilityBoundingWidth,
 		},
 		AbilityWidth,
 		AbilityHeight,
 		AbilityGutter,
 		0,
-		a.Total,
+		AbilityColumns,
 		a.Total,
 		a.Offset,
 	}.Point(r)
@@ -97,4 +84,3 @@ type MouseSlot struct {
 }
 
 type KeySlot MouseSlot
-

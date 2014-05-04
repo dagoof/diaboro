@@ -1,40 +1,60 @@
 package res
 
-type BoundingBox struct {
-	Left, Top, Width Offset
-}
+import (
+	//"log"
+)
 
 type Grid struct {
-	BoundingBox
+	BoundingBox Coordinate
 
-	Width, Height         Offset
-	Gutter, Padding       Offset
+	Width, Height         int
+	Gutter, Padding       int
 	Columns, Total, Index int
 }
 
-func ChangeMe(index int, width, gutter Offset) Offset {
+func TotalRowWidth(index, width, gutter int) int {
 	if index == 0 {
 		return 0
 	}
 
-	oIndex := Offset(index)
-
-	return oIndex*width + Offset(index-1)*gutter
+	return index*width + (index-1)*gutter
 }
 
-func (g Grid) Centered(r Resolution, left, top Offset) Coordinate {
+func RowOffset(index, width, gutter int) int {
+	return index*width + index*gutter
+}
+
+func (g Grid) Centered(c Coordinate) Coordinate {
 	return Coordinate{
-		r.X(left + (g.Width / Offset(2))),
-		r.Y(top + (g.Height / Offset(2))),
+		c.X + (g.Width / 2),
+		c.Y + (g.Height / 2),
 	}
 }
 
+func (g Grid) BoxWidth() int {
+	return TotalRowWidth(g.Columns, g.Width, g.Gutter)
+}
+
 func (g Grid) Point(r Resolution) Coordinate {
-	totalWidth := ChangeMe(g.Total%g.Columns, g.Width, g.Gutter)
-	offsetLeft := ChangeMe(g.Index%g.Columns, g.Width, g.Gutter)
+	row := g.Index / g.Columns
+	col := g.Index % g.Columns
 
-	left := (g.BoundingBox.Width-totalWidth)/2 + offsetLeft
-	top := Offset(g.Index / g.Columns) * (g.Height + g.Padding)
+	// If we are on the last row, we may have less cols
+	cols := g.Columns
+	if row == (g.Total / g.Columns) {
+		cols = (g.Total % g.Columns) + 1
+	}
 
-	return g.Centered(r, left, top)
+	totalWidth := TotalRowWidth(cols, g.Width, g.Gutter)
+	offsetLeft := RowOffset(col, g.Width, g.Gutter)
+
+	x := (g.BoxWidth()-totalWidth)/2 + offsetLeft
+	y := (g.Index / g.Columns) * (g.Height + g.Padding)
+
+	//log.Println(g.BoxWidth(), totalWidth)
+
+	c := Coordinate{x, y}
+	c = g.BoundingBox.Shift(c)
+	c = g.Centered(c)
+	return r.Normalize(c)
 }
