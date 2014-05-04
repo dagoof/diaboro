@@ -26,15 +26,27 @@ type Pointer interface {
 	Point(Resolution) Coordinate
 }
 
-type Passive struct {
-	Total, Offset int
-}
-
 type Ability struct {
 	Total, Offset int
 }
 
 type Rune struct {
+	Offset int
+}
+
+type Passive struct {
+	Total, Offset int
+}
+
+type MouseSlot struct {
+	Offset int
+}
+
+type KeySlot struct {
+	Offset int
+}
+
+type PassiveSlot struct {
 	Offset int
 }
 
