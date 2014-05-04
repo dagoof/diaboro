@@ -1,12 +1,33 @@
 package res
 
+type Offset float64
+
 const (
-	SlotWidth
+	/*
+		Width
+		Height
+		Gutter
+		Padding
+		Left
+		Top
+		Bounding
+	*/
+
+	AbilityBoundingLeft  = 0
+	AbilityBoundingTop  = 0
+	AbilityBoundingWidth = 1.0
+
+	AbilityWidth  = 0.2
+	AbilityHeight = 0.2
+	AbilityGutter = 0.1
+
+	SlotWidth = iota
 	SlotHeight
-	SlotLeftOffset
-	SlotTopOffset
 	SlotGutter
-	SlotVerticalGutter
+	SlotPadding
+	SlotLeft
+	SlotTop
+	SlotBounding
 
 	MouseSlotTopOffset
 
@@ -18,27 +39,9 @@ const (
 	ButtonHeight
 	ButtonGutter
 
-	AbilityWidth
-	AbilityHeight
-	AbilityGutter
-	AbilityTopOffset
-
-	DirectionWidth
-	DirectionHeight
-	DirectionTopOffset
-	LeftDirectionLeftOffset
-	RightDirectionLeftOffset
-
 	RuneWidth
 	RuneHeight
 	RuneLeftOffset
 	RuneTopOffset
 	RuneGutter
 )
-
-func Centered(left, top, width, height int) Coordinate {
-	return Coordinate{
-		left + (width / 2),
-		top + (height / 2),
-	}
-}

@@ -22,13 +22,16 @@ type Resolution struct {
 	Width, Height int
 }
 
-func (r Resolution) X(n float64) {
-	return r.Width * n
+func (r Resolution) Scale() Offset {
+	return Offset(r.Height) * 0.8
 }
 
+func (r Resolution) X(n Offset) int {
+	return (r.Width - r.Height) + int(r.Scale() * n)
+}
 
-func (r Resolution) Y(n float64) {
-	return r.Height * n
+func (r Resolution) Y(n Offset) int {
+	return int(r.Scale() * n)
 }
 
 type Pointer interface {
@@ -48,6 +51,7 @@ type Rune struct {
 }
 
 func (p Passive) Point(r Resolution) Coordinate {
+	return Coordinate{}
 }
 
 /*
@@ -60,33 +64,32 @@ func (p Passive) Point(r Resolution) Coordinate {
 total width = total * width + (total - 1) * gutter
 left offset = index * width + (index - 1) * gutter
 
-top-left = (total-width / 2) 
+top-left = (total-width / 2)
 
 */
 func (a Ability) Point(r Resolution) Coordinate {
-	blat := func(index, width, gutter int) int {
-		if index == 0 {
-			return 0
-		}
-
-		return index * width + (index - 1) * gutter
-	}
-
-	totalWidth := blat(a.Total, AbilityWidth, AbilityGutter)
-	leftOffset := blat(a.Index, AbilityWidth, AbilityGutter)
-
-	totalLeft := (AbilityBoundWidth - totalWidth) / 2 + leftOffset
-
-	return Centered(totalLeft, AbilityTopOffset, AbilityWidth, AbilityHeight)
-}
-
-func (r Rune) Point(r Resolution) Coordinate {
+	return Grid{
+		BoundingBox{
+			AbilityBoundingLeft,
+			AbilityBoundingTop,
+			AbilityBoundingWidth,
+		},
+		AbilityWidth,
+		AbilityHeight,
+		AbilityGutter,
+		0,
+		a.Total,
+		a.Total,
+		a.Offset,
+	}.Point(r)
 }
 
 func (b Button) Point(r Resolution) Coordinate {
+	return Coordinate{}
 }
 
 func (d Direction) Point(r Resolution) Coordinate {
+	return Coordinate{}
 }
 
 type MouseSlot struct {
@@ -95,4 +98,3 @@ type MouseSlot struct {
 
 type KeySlot MouseSlot
 
-type PassiveSlot
