@@ -3,14 +3,14 @@ package res
 type Direction int
 
 const (
-	Left Direction = iota + 1
+	Left Direction = iota
 	Right
 )
 
 type Button int
 
 const (
-	Accept Button = iota + 1
+	Accept Button = iota
 	Cancel
 )
 
@@ -105,15 +105,33 @@ func (roune Rune) Point(r Resolution) Coordinate {
 }
 
 func (b Button) Point(r Resolution) Coordinate {
-	return Coordinate{}
+	return Grid{
+		Coordinate{
+			ButtonBoundingLeft,
+			ButtonBoundingTop,
+		},
+		ButtonWidth,
+		ButtonHeight,
+		ButtonGutter,
+		0,
+		ButtonColumns,
+		ButtonColumns,
+		int(b),
+	}.Point(r)
 }
 
 func (d Direction) Point(r Resolution) Coordinate {
-	return Coordinate{}
+	return Grid{
+		Coordinate{
+			DirectionBoundingLeft,
+			DirectionBoundingTop,
+		},
+		DirectionWidth,
+		DirectionHeight,
+		DirectionGutter,
+		0,
+		DirectionColumns,
+		DirectionColumns,
+		int(d),
+	}.Point(r)
 }
-
-type MouseSlot struct {
-	Button int
-}
-
-type KeySlot MouseSlot
