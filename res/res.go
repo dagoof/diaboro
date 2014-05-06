@@ -135,3 +135,35 @@ func (d Direction) Point(r Resolution) Coordinate {
 		int(d),
 	}.Point(r)
 }
+
+func (s MouseSlot) Point(r Resolution) Coordinate {
+	return Grid{
+		Coordinate{
+			MouseSlotBoundingLeft,
+			MouseSlotBoundingTop,
+		},
+		MouseSlotWidth,
+		MouseSlotHeight,
+		MouseSlotGutter,
+		0,
+		MouseSlotColumns,
+		MouseSlotColumns,
+		s.Offset,
+	}.Point(r)
+}
+
+func (s KeySlot) Point(r Resolution) Coordinate {
+	return Grid{
+		Coordinate{
+			KeySlotBoundingLeft,
+			KeySlotBoundingTop,
+		},
+		KeySlotWidth,
+		KeySlotHeight,
+		KeySlotGutter,
+		KeySlotPadding,
+		KeySlotColumns,
+		KeySlotTotal,
+		s.Offset,
+	}.Point(r)
+}

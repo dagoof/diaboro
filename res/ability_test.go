@@ -41,3 +41,17 @@ func TestDirection(t *testing.T) {
 	t.Error("left", Left.Point(r))
 	t.Error("right", Right.Point(r))
 }
+
+func TestMouseSlot(t *testing.T) {
+	total := 2
+	for i := 0; i < total; i++ {
+		t.Error(total, MouseSlot{i}.Point(r))
+	}
+}
+
+func TestKeySlot(t *testing.T) {
+	total := 4
+	for i := 0; i < total; i++ {
+		t.Error(total, KeySlot{i}.Point(r))
+	}
+}

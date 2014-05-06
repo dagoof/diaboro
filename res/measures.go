@@ -54,19 +54,21 @@ const (
 	DirectionGutter       = 803
 	DirectionColumns      = 2
 
-	SlotWidth = iota
-	SlotHeight
-	SlotGutter
-	SlotPadding
-	SlotLeft
-	SlotTop
-	SlotBounding
+	MouseSlotBoundingLeft = 555
+	MouseSlotBoundingTop  = 185
+	MouseSlotWidth        = 407
+	MouseSlotHeight       = 98
+	MouseSlotGutter       = 12
+	MouseSlotColumns      = 2
 
-	MouseSlotTopOffset
-
-	PassiveSlotWidth
-	PassiveSlotHeight
-	PassiveSlotTopOffset
+	KeySlotBoundingLeft = MouseSlotBoundingLeft
+	KeySlotBoundingTop  = 377
+	KeySlotWidth        = MouseSlotWidth
+	KeySlotHeight       = MouseSlotHeight
+	KeySlotGutter       = MouseSlotGutter
+	KeySlotPadding      = 63
+	KeySlotColumns      = MouseSlotColumns
+	KeySlotTotal        = 4
 )
 
 type Coordinate struct {
