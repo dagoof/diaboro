@@ -167,3 +167,19 @@ func (s KeySlot) Point(r Resolution) Coordinate {
 		s.Offset,
 	}.Point(r)
 }
+
+func (s PassiveSlot) Point(r Resolution) Coordinate {
+	return Grid{
+		Coordinate{
+			PassiveSlotBoundingLeft,
+			PassiveSlotBoundingTop,
+		},
+		PassiveSlotWidth,
+		PassiveSlotHeight,
+		PassiveSlotGutter,
+		0,
+		PassiveSlotColumns,
+		PassiveSlotColumns,
+		s.Offset,
+	}.Point(r)
+}

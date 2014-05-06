@@ -55,3 +55,10 @@ func TestKeySlot(t *testing.T) {
 		t.Error(total, KeySlot{i}.Point(r))
 	}
 }
+
+func TestPassiveSlot(t *testing.T) {
+	total := 4
+	for i := 0; i < total; i++ {
+		t.Error(total, PassiveSlot{i}.Point(r))
+	}
+}

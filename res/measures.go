@@ -69,6 +69,13 @@ const (
 	KeySlotPadding      = 63
 	KeySlotColumns      = MouseSlotColumns
 	KeySlotTotal        = 4
+
+	PassiveSlotBoundingLeft = 557
+	PassiveSlotBoundingTop  = 722
+	PassiveSlotWidth        = PassiveWidth
+	PassiveSlotHeight       = PassiveHeight
+	PassiveSlotGutter       = 153
+	PassiveSlotColumns      = 4
 )
 
 type Coordinate struct {
