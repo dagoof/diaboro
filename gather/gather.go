@@ -38,7 +38,12 @@ func main() {
 		panic(err)
 	}
 
-	body, err := json.MarshalIndent(v, "", "  ")
+	index := blizz.NewSkillIndex(v)
+	body, err := json.MarshalIndent(
+		index.MustGet("black-blood"),
+		"", "  ",
+	)
+
 	if err != nil {
 		panic(err)
 	}

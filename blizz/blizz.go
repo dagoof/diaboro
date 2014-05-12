@@ -39,9 +39,3 @@ type Calculator struct {
 	Skills []Skill
 	Traits []Trait
 }
-
-type Offset int
-
-type TraitOffset struct {
-	Row, Column Offset
-}
