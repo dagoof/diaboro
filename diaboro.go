@@ -40,7 +40,6 @@ type Build struct {
 	Passive3 blizz.TraitMeta
 }
 
-/*
 func moveSkill(from, to blizz.SkillMeta) Routine {
 	var r Routine
 
@@ -57,16 +56,17 @@ func moveSkill(from, to blizz.SkillMeta) Routine {
 		r = append(r, TheInputer.Click(1))
 	}
 
-	r = append(r, TheInputer.Move(to.Ability.Coordinates()))
+	r = append(r, TheInputer.Move(to.Ability()))
 	r = append(r, TheInputer.Click(1))
-	r = append(r, TheInputer.Move(to.Rune.Coordinates()))
+	r = append(r, TheInputer.Move(to.Rune()))
 	r = append(r, TheInputer.Click(1))
-	r = append(r, TheInputer.Move(buttons.Accept))
+	r = append(r, TheInputer.Move(res.Accept))
 	r = append(r, TheInputer.Click(1))
 
 	return r
 }
 
+/*
 func movePassive(p Passive) Routine {
 	var r Routine
 
@@ -77,26 +77,27 @@ func movePassive(p Passive) Routine {
 
 	return r
 }
+*/
 
 func moveActives(from, to Build) Routine {
 	var r Routine
 
-	r = append(r, TheInputer.Move(buttons.Mouse0))
+	r = append(r, TheInputer.Move(res.MouseSlot{0}))
 	r = append(r, moveSkill(from.Mouse0, to.Mouse0)...)
 
-	r = append(r, TheInputer.Move(buttons.Mouse1))
+	r = append(r, TheInputer.Move(res.MouseSlot{1}))
 	r = append(r, moveSkill(from.Mouse1, to.Mouse1)...)
 
-	r = append(r, TheInputer.Move(buttons.Key0))
+	r = append(r, TheInputer.Move(res.KeySlot{0}))
 	r = append(r, moveSkill(from.Key0, to.Key0)...)
 
-	r = append(r, TheInputer.Move(buttons.Key1))
+	r = append(r, TheInputer.Move(res.KeySlot{1}))
 	r = append(r, moveSkill(from.Key1, to.Key1)...)
 
-	r = append(r, TheInputer.Move(buttons.Key2))
+	r = append(r, TheInputer.Move(res.KeySlot{2}))
 	r = append(r, moveSkill(from.Key2, to.Key2)...)
 
-	r = append(r, TheInputer.Move(buttons.Key3))
+	r = append(r, TheInputer.Move(res.KeySlot{3}))
 	r = append(r, moveSkill(from.Key3, to.Key3)...)
 
 	return r
@@ -105,12 +106,11 @@ func moveActives(from, to Build) Routine {
 func Switch(from, to Build) Routine {
 	var r Routine
 
-	r = append(r, clearActives(from, to)...)
+	//r = append(r, clearActives(from, to)...)
 	r = append(r, moveActives(from, to)...)
 
-	r = append(r, clearPassives(from, to)...)
-	r = append(r, movePassives(from, to)...)
+	//r = append(r, clearPassives(from, to)...)
+	//r = append(r, movePassives(from, to)...)
 
 	return r
 }
-*/

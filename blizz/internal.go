@@ -1,11 +1,23 @@
 package blizz
 
+import (
+	"github.com/dagoof/diaboro/res"
+)
+
 type SkillMeta struct {
-	Skill  Skill
-	Page   int
-	Total  int
-	Offset int
-	Rune   int
+	Skill      Skill
+	Page       int
+	Total      int
+	Offset     int
+	RuneOffset int
+}
+
+func (s *SkillMeta) Ability() res.Ability {
+	return res.Ability{s.Total, s.Offset}
+}
+
+func (s *SkillMeta) Rune() res.Rune {
+	return res.Rune{s.RuneOffset}
 }
 
 type TraitMeta struct {

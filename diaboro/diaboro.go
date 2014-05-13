@@ -9,7 +9,6 @@ import (
 
 	"github.com/dagoof/diaboro"
 	"github.com/dagoof/diaboro/blizz"
-	"github.com/dagoof/diaboro/res"
 )
 
 const (
@@ -47,12 +46,12 @@ func main() {
 	}
 
 	index := blizz.NewSkillIndex(v)
-	abil := index.MustGet(*ability)
+	skill := index.MustGet(*ability)
 
 	inp := diaboro.TheInputer
 
 	fmt.Println(inp.Click(1))
-	inp.Move(res.Ability{abil.Total, abil.Offset}).Execute()
+	inp.Move(skill.Ability()).Execute()
 	time.Sleep(time.Second)
-	inp.Move(res.Rune{abil.Rune}).Execute()
+	inp.Move(skill.Rune()).Execute()
 }
