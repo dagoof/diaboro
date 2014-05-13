@@ -66,6 +66,10 @@ func moveSkill(from, to blizz.SkillMeta) Routine {
 	return r
 }
 
+func MoveSkill(from, to blizz.SkillMeta) Routine {
+	return moveSkill(from, to)
+}
+
 /*
 func movePassive(p Passive) Routine {
 	var r Routine

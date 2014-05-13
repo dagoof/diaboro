@@ -26,6 +26,11 @@ var (
 		"zombie-bears",
 		"ability to trigger",
 	)
+	target = flag.String(
+		"target",
+		"vampire-bats",
+		"ability to switch to",
+	)
 )
 
 func init() {
@@ -46,12 +51,20 @@ func main() {
 	}
 
 	index := blizz.NewSkillIndex(v)
-	skill := index.MustGet(*ability)
+	from := index.MustGet(*ability)
+	to := index.MustGet(*target)
 
-	inp := diaboro.TheInputer
+	for _, part := range diaboro.MoveSkill(from, to) {
+		fmt.Println(part)
+		part.Execute()
+		time.Sleep(time.Millisecond * 500)
+	}
 
-	fmt.Println(inp.Click(1))
-	inp.Move(skill.Ability()).Execute()
-	time.Sleep(time.Second)
-	inp.Move(skill.Rune()).Execute()
+	/*
+		inp := diaboro.TheInputer
+		fmt.Println(inp.Click(1))
+		inp.Move(skill.Ability()).Execute()
+		time.Sleep(time.Second)
+		inp.Move(skill.Rune()).Execute()
+	*/
 }
