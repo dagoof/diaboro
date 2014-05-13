@@ -1,12 +1,15 @@
 package diaboro
 
-type Command string
+import (
+	"github.com/dagoof/diaboro/blizz"
+	"github.com/dagoof/diaboro/res"
+)
+
+type Command interface {
+	Execute() error
+}
 
 type Routine []Command
-
-type Coordinate struct {
-	X, Y int
-}
 
 type Button int
 
@@ -15,56 +18,51 @@ type Key string
 type Inputer interface {
 	Click(Button) Command
 	Press(Key) Command
-	Move(Coordinate) Command
+	Move(res.Pointer) Command
 }
 
 type Ability struct {
 	Total, Index int
 }
 
-type Skill struct {
-	Page    int
-	Ability Ability
-	Rune    int
-}
-
 type Passive Ability
 
 type Build struct {
-	Mouse0   Skill
-	Mouse1   Skill
-	Key0     Skill
-	Key1     Skill
-	Key2     Skill
-	Key3     Skill
-	Passive0 Passive
-	Passive1 Passive
-	Passive2 Passive
-	Passive3 Passive
+	Mouse0   blizz.SkillMeta
+	Mouse1   blizz.SkillMeta
+	Key0     blizz.SkillMeta
+	Key1     blizz.SkillMeta
+	Key2     blizz.SkillMeta
+	Key3     blizz.SkillMeta
+	Passive0 blizz.TraitMeta
+	Passive1 blizz.TraitMeta
+	Passive2 blizz.TraitMeta
+	Passive3 blizz.TraitMeta
 }
 
-func moveSkill(from, to Skill) Routine {
+/*
+func moveSkill(from, to blizz.SkillMeta) Routine {
 	var r Routine
 
-	direction := buttons.Right
+	direction := res.Right
 	pageTurns := to.Page - from.Page
 
 	if to.Page < from.Page {
-		direction = buttons.Left
+		direction = res.Left
 		pageTurns = -pageTurns
 	}
 
-	r = append(r, inputer.Move(direction))
+	r = append(r, TheInputer.Move(direction))
 	for i := 0; i < pageTurns; i++ {
-		r = append(r, inputer.Click(1))
+		r = append(r, TheInputer.Click(1))
 	}
 
-	r = append(r, inputer.Move(to.Ability.Coordinates()))
-	r = append(r, inputer.Click(1))
-	r = append(r, inputer.Move(to.Rune.Coordinates()))
-	r = append(r, inputer.Click(1))
-	r = append(r, inputer.Move(buttons.Accept))
-	r = append(r, inputer.Click(1))
+	r = append(r, TheInputer.Move(to.Ability.Coordinates()))
+	r = append(r, TheInputer.Click(1))
+	r = append(r, TheInputer.Move(to.Rune.Coordinates()))
+	r = append(r, TheInputer.Click(1))
+	r = append(r, TheInputer.Move(buttons.Accept))
+	r = append(r, TheInputer.Click(1))
 
 	return r
 }
@@ -72,10 +70,10 @@ func moveSkill(from, to Skill) Routine {
 func movePassive(p Passive) Routine {
 	var r Routine
 
-	r = append(r, inputer.Move(p.Coordinates()))
-	r = append(r, inputer.Click(1))
-	r = append(r, inputer.Move(buttons.Accept))
-	r = append(r, inputer.Click(1))
+	r = append(r, TheInputer.Move(p.Coordinates()))
+	r = append(r, TheInputer.Click(1))
+	r = append(r, TheInputer.Move(buttons.Accept))
+	r = append(r, TheInputer.Click(1))
 
 	return r
 }
@@ -83,22 +81,22 @@ func movePassive(p Passive) Routine {
 func moveActives(from, to Build) Routine {
 	var r Routine
 
-	r = append(r, inputer.Move(buttons.Mouse0))
+	r = append(r, TheInputer.Move(buttons.Mouse0))
 	r = append(r, moveSkill(from.Mouse0, to.Mouse0)...)
 
-	r = append(r, inputer.Move(buttons.Mouse1))
+	r = append(r, TheInputer.Move(buttons.Mouse1))
 	r = append(r, moveSkill(from.Mouse1, to.Mouse1)...)
 
-	r = append(r, inputer.Move(buttons.Key0))
+	r = append(r, TheInputer.Move(buttons.Key0))
 	r = append(r, moveSkill(from.Key0, to.Key0)...)
 
-	r = append(r, inputer.Move(buttons.Key1))
+	r = append(r, TheInputer.Move(buttons.Key1))
 	r = append(r, moveSkill(from.Key1, to.Key1)...)
 
-	r = append(r, inputer.Move(buttons.Key2))
+	r = append(r, TheInputer.Move(buttons.Key2))
 	r = append(r, moveSkill(from.Key2, to.Key2)...)
 
-	r = append(r, inputer.Move(buttons.Key3))
+	r = append(r, TheInputer.Move(buttons.Key3))
 	r = append(r, moveSkill(from.Key3, to.Key3)...)
 
 	return r
@@ -115,3 +113,4 @@ func Switch(from, to Build) Routine {
 
 	return r
 }
+*/

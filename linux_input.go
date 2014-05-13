@@ -5,20 +5,46 @@ package diaboro
 import (
 	"fmt"
 	"os/exec"
+
+	"github.com/dagoof/diaboro/res"
 )
+
+const (
+	xdotool = "xdotool"
+)
+
+type Cmd struct {
+	Name string
+	Args []string
+}
+
+func NewCmd(name string, args ...string) *Cmd {
+	return &Cmd{name, args}
+}
+
+func (c *Cmd) Execute() error {
+	return exec.Command(c.Name, c.Args...).Run()
+}
 
 type XDoTool struct{}
 
-func (x XDoTool) Click(b Button) Command {
-	return Command(fmt.Sprintf("xdotool click %d", b))
+func (i XDoTool) Click(b Button) Command {
+	return NewCmd(xdotool, "click", fmt.Sprintf("%d", b))
 }
 
-func (x XDoTool) Press(k Key) Command {
-	return Command(fmt.Sprintf("xdotool key %s", k))
+func (i XDoTool) Press(k Key) Command {
+	return NewCmd(xdotool, "key", string(k))
 }
 
-func (x XDoTool) Move(c Coordinate) Command {
-	return Command(fmt.Sprintf("xdotool mousemove %d %d", c.X, c.Y))
+func (i XDoTool) Move(p res.Pointer) Command {
+	c := p.Point(i.Resolution())
+	x := fmt.Sprintf("%d", c.X)
+	y := fmt.Sprintf("%d", c.Y)
+	return NewCmd(xdotool, "mousemove", x, y)
+}
+
+func (i XDoTool) Resolution() res.Resolution {
+	return res.Resolution{1920, 1200}
 }
 
 func init() {

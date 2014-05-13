@@ -8,6 +8,16 @@ type SkillMeta struct {
 	Rune   int
 }
 
+type TraitMeta struct {
+	trait         Trait
+	Total, Offset int
+}
+
+type TraitIndex struct {
+	traits []Trait
+	index  map[string]TraitMeta
+}
+
 type SkillIndex struct {
 	skills [][]Skill
 	index  map[string]SkillMeta
