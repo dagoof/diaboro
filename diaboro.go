@@ -66,22 +66,34 @@ func moveSkill(from, to blizz.SkillMeta) Routine {
 	return r
 }
 
-func MoveSkill(from, to blizz.SkillMeta) Routine {
-	return moveSkill(from, to)
-}
-
-/*
-func movePassive(p Passive) Routine {
+func movePassive(p blizz.TraitMeta) Routine {
 	var r Routine
 
-	r = append(r, TheInputer.Move(p.Coordinates()))
+	r = append(r, TheInputer.Move(p.Passive()))
 	r = append(r, TheInputer.Click(1))
-	r = append(r, TheInputer.Move(buttons.Accept))
+	r = append(r, TheInputer.Move(res.Accept))
 	r = append(r, TheInputer.Click(1))
 
 	return r
 }
-*/
+
+func movePassives(from, to Build) Routine {
+	var r Routine
+
+	r = append(r, TheInputer.Move(res.PassiveSlot{0}))
+	r = append(r, movePassive(to.Passive0)...)
+
+	r = append(r, TheInputer.Move(res.PassiveSlot{1}))
+	r = append(r, movePassive(to.Passive1)...)
+
+	r = append(r, TheInputer.Move(res.PassiveSlot{2}))
+	r = append(r, movePassive(to.Passive2)...)
+
+	r = append(r, TheInputer.Move(res.PassiveSlot{3}))
+	r = append(r, movePassive(to.Passive3)...)
+
+	return r
+}
 
 func moveActives(from, to Build) Routine {
 	var r Routine
@@ -114,7 +126,7 @@ func Switch(from, to Build) Routine {
 	r = append(r, moveActives(from, to)...)
 
 	//r = append(r, clearPassives(from, to)...)
-	//r = append(r, movePassives(from, to)...)
+	r = append(r, movePassives(from, to)...)
 
 	return r
 }

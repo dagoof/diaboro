@@ -50,21 +50,39 @@ func main() {
 		panic(err)
 	}
 
-	index := blizz.NewSkillIndex(v)
-	from := index.MustGet(*ability)
-	to := index.MustGet(*target)
+	si := blizz.NewSkillIndex(v)
+	ti := blizz.NewTraitIndex(v)
 
-	for _, part := range diaboro.MoveSkill(from, to) {
-		fmt.Println(part)
-		part.Execute()
-		time.Sleep(time.Millisecond * 500)
+	from := diaboro.Build{
+		si.MustGet("firebomb"),
+		si.MustGet("vampire-bats"),
+		si.MustGet("burning-dogs"),
+		si.MustGet("wrathful-protector"),
+		si.MustGet("vengeful-spirit"),
+		si.MustGet("jaunt"),
+		ti.MustGet("fetish-sycophants"),
+		ti.MustGet("grave-injustice"),
+		ti.MustGet("midnight-feast"),
+		ti.MustGet("pierce-the-veil"),
 	}
 
-	/*
-		inp := diaboro.TheInputer
-		fmt.Println(inp.Click(1))
-		inp.Move(skill.Ability()).Execute()
-		time.Sleep(time.Second)
-		inp.Move(skill.Rune()).Execute()
-	*/
+	to := diaboro.Build{
+		si.MustGet("well-of-souls"),
+		si.MustGet("zombie-bears"),
+		si.MustGet("piranhado"),
+		si.MustGet("mass-hysteria"),
+		si.MustGet("vengeful-spirit"),
+		si.MustGet("jaunt"),
+		ti.MustGet("spirit-vessel"),
+		ti.MustGet("grave-injustice"),
+		ti.MustGet("rush-of-essence"),
+		ti.MustGet("spiritual-attunement"),
+	}
+
+	for _, part := range diaboro.Switch(from, to) {
+		fmt.Println(part)
+		part.Execute()
+
+		time.Sleep(time.Millisecond * 500)
+	}
 }

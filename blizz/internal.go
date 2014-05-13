@@ -20,16 +20,6 @@ func (s *SkillMeta) Rune() res.Rune {
 	return res.Rune{s.RuneOffset}
 }
 
-type TraitMeta struct {
-	trait         Trait
-	Total, Offset int
-}
-
-type TraitIndex struct {
-	traits []Trait
-	index  map[string]TraitMeta
-}
-
 type SkillIndex struct {
 	skills [][]Skill
 	index  map[string]SkillMeta
@@ -77,4 +67,41 @@ func NewSkillIndex(c Calculator) SkillIndex {
 	}
 
 	return SkillIndex{skills, index}
+}
+
+type TraitMeta struct {
+	trait  Trait
+	Total  int
+	Offset int
+}
+
+func (t *TraitMeta) Passive() res.Passive {
+	return res.Passive{t.Total, t.Offset}
+}
+
+type TraitIndex struct {
+	traits []Trait
+	index  map[string]TraitMeta
+}
+
+func NewTraitIndex(c Calculator) TraitIndex {
+	index := map[string]TraitMeta{}
+
+	for i, trait := range c.Traits {
+		index[Normalize(trait.Name)] = TraitMeta{
+			trait,
+			len(c.Traits),
+			i,
+		}
+	}
+	return TraitIndex{c.Traits, index}
+}
+
+func (i TraitIndex) MustGet(slug string) TraitMeta {
+	return i.index[slug]
+}
+
+func (i TraitIndex) Get(slug string) (TraitMeta, bool) {
+	m, ok := i.index[slug]
+	return m, ok
 }
